@@ -6,26 +6,24 @@
 <h2>Фото Галлерея:</h2>
 {% if photos %}
 {% for photo in photos %}
-    {% if user.pk != photo.author_id %}
+
         <br/>
 
         <span>Опубликовано: {{photo.date_publish}}</span>
         <a href="{% url 'profile' photo.author_id %}">Автор: {{photo.author}}</a>
-        {% if not photo.author in user.subscriptions.all %}
-            <a href="{% url 'subsribe' photo.author_id %}">Подписаться</a>
-        {% endif %}
+
         <p>
-            <a href="{% url 'photo_detail' photo.id %}"><img class="post_pic" src="/uploads/{{ post.image }}"></a>
+            <a href="{% url 'photo_detail' photo.id %}"><img class="photo_pic" src="/uploads/{{ photo.image }}"></a>
         </p>
         <p>{{photo.description}}</p>
 
         {% if user in photo.user_likes.all %}
             <a href="{% url 'make_like_unlike' photo.id %}">
-                <img src="/static/images/ths.svg" width="40" height="auto">
+                <img src="/static/images/favor.ico" width="40" height="auto">
             </a>
         {% else %}
             <a href="{% url 'make_like_unlike' photo.id %}">
-                <img src="/static/images/thl.svg"  width="40" height="auto">
+                <img src="/static/images/nofavor.png"  width="40" height="auto">
             </a>
         {% endif %}  - {{photo.user_likes.count}}
 
@@ -47,7 +45,7 @@
                     <p>{{ comment.author }} : {{ comment.text }}</p>
             {% endfor %}
         {% endif %}
-    {% endif %}
+
 <br/><br/>
 {% endfor %}
 {% else %}

@@ -34,20 +34,20 @@
                         <span> {{ choice.1 }}</span>
                     {% endif %}
                 {% endfor %}
-    <br/><b>Подписки ({{prof_user.subscriptions.all.count}}) на:</b>
-    {% for item in prof_user.subscriptions.all %}
-        <span><a href="{% url 'profile' item.id %}"> {{ item }}</a>,</span>
-    {% endfor %}
-    <br/><b>Подписчики ({{prof_user.subscribers.all.count}}) :</b>
-    {% for item in prof_user.subscribers.all %}
-        <span><a href="{% url 'profile' item.id %}"> {{ item }}</a>,</span>
-    {% endfor %}
+
     <br/><b>Мои фото ({{prof_user.photos.all.count}}): </b><br/>
        </div>
     </div>
     <br/>
-    <h3>Мои посты: </h3>
-    {% for item in prof_user.photos.all %}
+    <h3>Мои любимые фото: </h3>
+{% if user == prof_user %}
+    {% for item in photos %}
+        {% if user in item.user_likes.all %}
+        <span>Опубликовано: {{item.date_publish}}</span>
+        <a href="{% url 'profile' item.author_id %}">Автор: {{item.author}}</a><br/>
         <a href="{% url 'photo_detail' item.id %}"><img class="post_img" src="/uploads/{{ item.image }}" width="auto" height="200" alt="post picture"></a>
-    {% endfor %} <br/> <br/>
+        <br/>
+        {% endif %}
+    {% endfor %}
+{% endif %}<br/> <br/>
 {% endblock %}

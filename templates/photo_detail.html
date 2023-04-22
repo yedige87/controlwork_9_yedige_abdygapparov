@@ -20,7 +20,7 @@
         <br/><b>Author: </b><span><a href="{% url 'profile' photo.author_id %}">{{ post.author }}</a>
         <br/><b>Description: </b>{{ photo.description }}
         <br/><b>Created at: </b>{{ photo.date_publish }},  <b> Last Update at: </b>{{ post.date_update }}
-        <br/><b>Photo likes ({{photo.user_likes.count}}): </b>
+        <br/><b>Photo favorites: ({{photo.user_likes.count}}): </b>
         {% for liker in photo.user_likes.all %}
             <span><a href="{% url 'profile' liker.id %}">{{ liker}}</a>,</span>
         {% endfor %}
