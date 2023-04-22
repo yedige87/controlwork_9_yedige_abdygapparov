@@ -85,11 +85,10 @@ class CommentAddView(LoginRequiredMixin, FormView):
                 messages.warning(request, 'Комментарий к фото не добавлено!')
         return redirect('home')
 
-фото
 class PhotoDetailView(DetailView):
     template_name = 'photo_detail.html'
     model = Photo
-    extra_context = {'comments': Comment.objects.all()}
+    extra_context = {'photos': Photo.objects.all(),'comments': Comment.objects.all()}
 
 
 class PhotoUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):

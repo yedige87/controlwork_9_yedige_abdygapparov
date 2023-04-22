@@ -4,10 +4,12 @@ from django.utils.translation import gettext_lazy as _
 from django.db.models import TextChoices
 from .managers import CustomUserManager
 
+
 class GenderChoice(TextChoices):
     NO_INFO = 'no_info', 'Не_указан'
     MALE = 'male', 'Мужской'
     FEMALE = 'female', 'Женский'
+
 
 class CustomUser(AbstractUser):
     username = None
@@ -26,11 +28,7 @@ class CustomUser(AbstractUser):
         verbose_name='Аватар',
         default='user_pic/blank.jpg'
     )
-    subscriptions = models.ManyToManyField(
-        verbose_name='Подписки',
-        to='users.CustomUser',
-        related_name='subscribers'
-    )
+
     user_info = models.CharField(
         max_length=100,
         null=True,
