@@ -17,4 +17,4 @@ class SearchForm(forms.Form):
 
 
 class CommentForm(forms.Form):
-    text = forms.CharField(max_length=200, required=True, label='', widget=forms.TextInput(attrs={'placeholder': 'Введите свой комментарий...Введите свой комментарий...Введите свой комментарий...Введите свой комментарий...'}))
+    text = forms.CharField(max_length=200, required=True, label='', widget=forms.TextInput(attrs={'placeholder': 'Введите свой комментарий'}))
