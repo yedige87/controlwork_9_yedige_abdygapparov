@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block title %}Home{% endblock %}
+{% block content %}
+   {% include 'partial/search.html' %}
+<h2>Фото Галлерея:</h2>
+{% if photos %}
+{% for photo in photos %}
+    {% if user.pk != photo.author_id %}
+        <br/>
+
+        <span>Опубликовано: {{photo.date_publish}}</span>
+        <a href="{% url 'profile' photo.author_id %}">Автор: {{photo.author}}</a>
+        {% if not photo.author in user.subscriptions.all %}
+            <a href="{% url 'subsribe' photo.author_id %}">Подписаться</a>
+        {% endif %}
+        <p>
+            <a href="{% url 'photo_detail' photo.id %}"><img class="post_pic" src="/uploads/{{ post.image }}"></a>
+        </p>
+        <p>{{photo.description}}</p>
+
+        {% if user in photo.user_likes.all %}
+            <a href="{% url 'make_like_unlike' photo.id %}">
+                <img src="/static/images/ths.svg" width="40" height="auto">
+            </a>
+        {% else %}
+            <a href="{% url 'make_like_unlike' photo.id %}">
+                <img src="/static/images/thl.svg"  width="40" height="auto">
+            </a>
+        {% endif %}  - {{photo.user_likes.count}}
+
+        <img src="/static/images/comment.png"> - {{photo.comments.count}}
+
+        {% if user.is_authenticated %}
+
+            <form action="{% url 'comment_add' photo.pk %}" method="post">
+
+                {% csrf_token %}
+                {% bootstrap_form comment_form %}
+                {% bootstrap_button button_type="submit" content='Опубликовать' %}
+
+            </form>
+        {% endif %}
+        {% if photo.comments.count > 0 %}
+            <h3>Комментарии: </h3>
+            {% for comment in photo.comments.all %}
+                    <p>{{ comment.author }} : {{ comment.text }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+<br/><br/>
+{% endfor %}
+{% else %}
+<h2>Фото отсутствуют</h2>
+{% endif %}
+
+{% endblock %}

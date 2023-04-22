@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block title %}Photo Detail{% endblock %}
+
+{% block menu %}
+    {% if user.is_authenticated and user.id == photo.author_id %}
+        <a href="{% url 'profile' user.id %}">Автор: {{photo.author}}</a>
+        <a href="{% url 'photo_add' %}" class="btn btn-primary">Create Photo</a>
+        <a href="{% url 'photo_update' photo.pk %}" class="btn btn-success">Update Photo</a>
+        <a href="{% url 'photo_delete' photo.pk %}" class="btn btn-danger">Delete Photo</a>
+    {% endif %}
+    <li>Текущий пользователь: "{{ user.full_name }}"</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3>Photo Detail</h3>
+        <img src="/uploads/{{ photo.image }}" width="auto" height="200" alt="post picture">
+        <br/><b>Image: </b>{{ photo.image }}
+        <br/><b>Author: </b><span><a href="{% url 'profile' photo.author_id %}">{{ post.author }}</a>
+        <br/><b>Description: </b>{{ photo.description }}
+        <br/><b>Created at: </b>{{ photo.date_publish }},  <b> Last Update at: </b>{{ post.date_update }}
+        <br/><b>Photo likes ({{photo.user_likes.count}}): </b>
+        {% for liker in photo.user_likes.all %}
+            <span><a href="{% url 'profile' liker.id %}">{{ liker}}</a>,</span>
+        {% endfor %}
+
+        <br/><b>Photo comments ({{photo.comments.count}}): </b>
+            {% if photo.comments.count > 0 %}
+                {% for comment in photo.comments.all %}
+                    <br/><b><a href="{% url 'profile' comment.author_id %}">{{ comment.author }}</a> - </b> {{ comment.text }}
+                {% endfor %}
+            {% endif %}
+    </div>
+{% endblock %}

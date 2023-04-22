@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Photo Update{% endblock %}
+{% block content %}
+    <h3>Редактировать Фото - {{ photo.image }}</h3>
+    <h3>Автор фото - "{{ user.full_name }}" </h3>
+<div class="form">
+    <form action="{% url 'photo_update' photo.pk %}" method="post", enctype="multipart/form-data">
+    {% include 'partial/photo_form.html' with button_text='Сохранить' %}
+    </form>
+    <a href="{% url 'photo_check' photo.pk %}" class="btn btn-primary">Отмена</a>
+</div>
+{% endblock %}
