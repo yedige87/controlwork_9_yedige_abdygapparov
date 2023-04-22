@@ -1,5 +1,3 @@
-import django
-from django.template.defaulttags import url
 from django.urls import path
 
 from .views import ProfileView, subscribe_view, LoginView, make_like_view, UserChangeView, unsubscribe_view, \
